@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step2
+namespace Tutorial.Jobs_Step2
 {
     
     [BurstCompile]

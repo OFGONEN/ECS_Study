@@ -2,9 +2,9 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using ECSStudy.StarterTutorial.Jobs_Step2;
+using Tutorial.Jobs_Step2;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step4
+namespace Tutorial.Jobs_Step4
 {
     public class FindNearest : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace ECSStudy.StarterTutorial.Jobs_Step4
 
         public void Start()
         {
-            Spawner spawner = GetComponent<Spawner>();
+            Jobs_Step2.Spawner spawner = GetComponent<Jobs_Step2.Spawner>();
             TargetPositions = new NativeArray<float3>(spawner.NumTargets, Allocator.Persistent);
             SeekerPositions = new NativeArray<float3>(spawner.NumSeekers, Allocator.Persistent);
             NearestTargetPositions = new NativeArray<float3>(spawner.NumSeekers, Allocator.Persistent);
@@ -31,12 +31,12 @@ namespace ECSStudy.StarterTutorial.Jobs_Step4
         {
             for (int i = 0; i < TargetPositions.Length; i++)
             {
-                TargetPositions[i] = Spawner.TargetTransforms[i].localPosition;
+                TargetPositions[i] = Jobs_Step2.Spawner.TargetTransforms[i].localPosition;
             }
 
             for (int i = 0; i < SeekerPositions.Length; i++)
             {
-                SeekerPositions[i] = Spawner.SeekerTransforms[i].localPosition;
+                SeekerPositions[i] = Jobs_Step2.Spawner.SeekerTransforms[i].localPosition;
             }
 
             SortJob<float3, AxisXComparer> sortJob = TargetPositions.SortJob(new AxisXComparer { });

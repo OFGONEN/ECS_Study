@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ECSStudy.StarterTutorial.Jobs_Step1;
+using Tutorial.Jobs_Step1;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step2
+namespace Tutorial.Jobs_Step2
 {
     public class Spawner : MonoBehaviour
     {

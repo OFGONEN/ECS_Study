@@ -6,7 +6,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step2
+namespace Tutorial.Jobs_Step2
 {
     public class FindNearest : MonoBehaviour
     {

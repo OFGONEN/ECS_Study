@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step4
+namespace Tutorial.Jobs_Step4
 {
     [BurstCompile]
     public struct FindNearestJob : IJobParallelFor

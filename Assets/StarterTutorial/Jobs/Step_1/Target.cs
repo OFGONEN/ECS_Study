@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ECSStudy.StarterTutorial.Jobs_Step1
+namespace Tutorial.Jobs_Step1
 {
     public class Target : MonoBehaviour
     {
