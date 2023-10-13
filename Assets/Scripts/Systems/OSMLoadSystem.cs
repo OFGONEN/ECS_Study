@@ -4,21 +4,22 @@ using UnityEngine;
 
 namespace Curvit
 {
-    [RequireMatchingQueriesForUpdate]
     public partial class OSMLoadSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            RequireForUpdate<OSMLoadPathData>();
+        }
+
         protected override void OnUpdate()
         {
-            Entities.ForEach((Entity entity, in OSMLoadPathData osmLoadPathData) =>
-            {
-                var xmlDocument = new XmlDocument();
-                xmlDocument.Load(osmLoadPathData.LoadPathData.ToString());
-                
-                EntityManager.DestroyEntity(entity);
-            })
-                .WithStructuralChanges()
-                .WithoutBurst()
-                .Run();
+            var entity = SystemAPI.GetSingletonEntity<OSMLoadPathData>();
+            var component = EntityManager.GetComponentData<OSMLoadPathData>(entity);
+            
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(component.LoadPathData.ToString());
+            
+            EntityManager.DestroyEntity(entity);
         }
     }
 }
