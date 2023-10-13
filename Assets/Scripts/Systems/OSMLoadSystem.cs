@@ -76,15 +76,17 @@ namespace Curvit
     [BurstCompile]
     public partial struct NodeConstructionJob : IJobParallelFor
     {
-        [ReadOnly]
         [DeallocateOnJobCompletion]
-        public NativeArray<CurvitEntityData> nodeDataArray;
+        
+        [ReadOnly] public NativeArray<CurvitEntityData> nodeDataArray;
+        // [ReadOnly] public Entity nodeEntityPrefab;
         public EntityCommandBuffer.ParallelWriter ECB;
         
         [BurstCompile]
         public void Execute(int index)
         {
-            var entity = ECB.CreateEntity(index);
+            // var entity = ECB.Instantiate(index, nodeEntityPrefab);
+            var entity = ECB.CreateEntity(0);
             ECB.AddComponent(index,entity, nodeDataArray[index]);
         }
     }
