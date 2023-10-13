@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Transforms;
 
 namespace Curvit
 {
@@ -28,6 +29,7 @@ namespace Curvit
             EntityManager.DestroyEntity(entity);
             
             var entityCommandBuffer = SystemAPI.GetSingleton<EndInitializationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(World.Unmanaged).AsParallelWriter();
+            var curvitPrefabData = SystemAPI.GetSingleton<CurvitPrefabData>();
             
             var xmlNodeOsm = xmlDocument.SelectSingleNode("osm");
             var xmlNodeListNode = xmlNodeOsm.SelectNodes("node");
@@ -66,6 +68,7 @@ namespace Curvit
             var nodeConstructionJobHandle = new NodeConstructionJob
             {
                 nodeDataArray = nodesEntityDataArray,
+                nodeEntityPrefab = curvitPrefabData.nodeEntityPrefab,
                 ECB = entityCommandBuffer
             }.Schedule(nodesEntityDataArray.Length, nodesEntityDataArray.Length / 4, Dependency);
 
@@ -79,15 +82,21 @@ namespace Curvit
         [DeallocateOnJobCompletion]
         
         [ReadOnly] public NativeArray<CurvitEntityData> nodeDataArray;
-        // [ReadOnly] public Entity nodeEntityPrefab;
+        [ReadOnly] public Entity nodeEntityPrefab;
         public EntityCommandBuffer.ParallelWriter ECB;
         
         [BurstCompile]
         public void Execute(int index)
         {
-            // var entity = ECB.Instantiate(index, nodeEntityPrefab);
-            var entity = ECB.CreateEntity(0);
+            // var entity = ECB.CreateEntity(0);
+            var entity = ECB.Instantiate(0, nodeEntityPrefab);
             ECB.AddComponent(index,entity, nodeDataArray[index]);
+            ECB.SetComponent(index, entity, new LocalTransform
+            {
+               Position = nodeDataArray[index].Position,
+               Rotation = quaternion.identity,
+               Scale = 1
+            });
         }
     }
 }
