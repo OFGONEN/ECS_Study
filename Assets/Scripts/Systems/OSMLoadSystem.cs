@@ -1,9 +1,9 @@
 using System.Xml;
 using Unity.Entities;
-using UnityEngine;
 
 namespace Curvit
 {
+    [UpdateInGroup(typeof(InitializationSystemGroup), OrderFirst = true)]
     public partial class OSMLoadSystem : SystemBase
     {
         protected override void OnCreate()
